@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
@@ -8,12 +10,10 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <title>List of Apps</title>
 </head>
-<body class="d-flex justify-content-center align-items-center">
-    <div class="container-fluid d-flex col-md-10 opacity-100 justify-content-center align-items-center border border-white" style="height:90vh;border-radius:50px;margin-top:35px;background-image:url('https://img.freepik.com/premium-vector/abstract-black-background-dynamic-black-landing-page_249611-4949.jpg')">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-12 w-100 text-white">
-                <br><br>
-                &nbsp; &nbsp; &nbsp;
+<body class="d-flex justify-content-center align-items-center vh-100 border border-5 border-danger" style="border-radius:10px;background-image:url(/static/images/home.jpg);background-position: center;background-repeat: no-repeat;background-size: cover;">
+    <div class="container-fluid d-flex col-md-12 opacity-100 justify-content-center align-items-center border border-white border-5 h-75 w-75" style="border-radius:10px;backdrop-filter: blur(3px);">
+        <div class="row">
+            <div class="col-md-12 text-white" style="color: white; font-weight: bold;">
                 <a class="btn btn-lg btn-primary" href="mainApp/">
                     Let's Get Started
                 </a>
