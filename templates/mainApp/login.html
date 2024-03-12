@@ -10,6 +10,7 @@
     <link rel="icon" href="/static/images/logo.ico" type="image/x-icon">
 </head>
 <body class="d-flex justify-content-start align-items-center border border-5 border-white vh-100" style="border-radius:10px;background-image:url(/static/images/login.jpg);background-position: center;background-repeat: no-repeat;background-size: cover;">
+    {% csrf_token %}
     <div class="container d-flex flex-column justify-content-center align-items-center border border-5 border-white h-50" style="border-radius: 10px;width:30%;margin:50px;">
         <div class="row flex-row w-100 m-3">
             <div class="col flex-column col-xxl-auto col-xl-auto col-lg-auto col-md-auto col-sm-auto w-100">

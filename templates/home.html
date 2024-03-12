@@ -12,7 +12,8 @@
     <link rel="icon" href="/static/images/logo.ico" type="image/x-icon">
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 border border-5 border-danger" style="border-radius:10px;background-image:url(/static/images/home.jpg);background-position: center;background-repeat: no-repeat;background-size: cover;">
-    <div class="container-fluid d-flex col-md-12 opacity-100 justify-content-center align-items-center border border-white border-5 h-75 w-75" style="border-radius:10px;backdrop-filter: blur(3px);">
+    {% csrf_token %}
+    <div class="container-fluid d-flex col-md-12 opacity-100 justify-content-center align-items-center h-75 w-75" style="border-radius:10px;backdrop-filter: blur(3px);">
         <div class="row">
             <div class="col-md-12 text-white" style="color: white; font-weight: bold;">
                 <a class="btn btn-lg btn-primary" href="mainApp/login">
