@@ -61,7 +61,7 @@ def logout(request):
     if request.session.has_key('studentEmail'):
         del request.session['studentEmail']
         del request.session['studentPassword']
-    elif request.session.has_key('adminEmail'):
+    if request.session.has_key('adminEmail'):
         del request.session['adminEmail']
         del request.session['adminPassword']
     return redirect('login')
