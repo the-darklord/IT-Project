@@ -11,15 +11,18 @@
 <body>
     {% csrf_token %}
     <div>
-        Email : <strong>{{email}}</strong>
-        <br>
+        <h1>Welcome, {{ student.name }}</h1> <br>
+        <h1>Email : {{student.email}}</h1> <br>
+        <h1>Phone : {{student.phone}}</h1> <br>
+        <h1>Address : {{student.address}}</h1> <br>
     </div>
+    <br> <br>
     <div>
-        Password : <strong>{{password}}</strong>
-        <br>
+        <h2>{{marks.subject1}} : {{marks.marks1}}</h2> <br>
+        <h2>{{marks.subject2}} : {{marks.marks2}}</h2> <br>
+        <h2>{{marks.subject3}} : {{marks.marks3}}</h2> <br>
     </div>
-    <br>
-    <br>
+    <br> <br>
     <a class="btn btn-primary" href="logout">Logout</a>
 </body>
 </html>

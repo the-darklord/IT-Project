@@ -9,17 +9,35 @@
     <title>Document</title>
 </head>
 <body>
-    {% csrf_token %}
-    <div>
-        Email : <strong>{{email}}</strong>
-        <br>
-    </div>
-    <div>
-        Password : <strong>{{password}}</strong>
-        <br>
-    </div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{studentform.as_p}}
+        <input type="submit" value="Submit">
+    </form>
+    <br> <br> <br> <br>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{marksform.as_p}}
+        <input type="submit" value="Submit">
+    </form>
+    <br> <br> <br> <br>
+    <h1> Students </h1>
+    {% for s in student %}
+    <p>{{s.name}}</p>
+    {% endfor %}
+    <br> <br> <br> <br>
+    <h1> Marks </h1>
+    {% for m in marks %}
+    <p>{{m.student.name}}</p>
     <br>
+    <p>{{m.subject1}} : {{m.marks1}}</p>
     <br>
+    <p>{{m.subject2}} : {{m.marks2}}</p>
+    <br>
+    <p>{{m.subject3}} : {{m.marks3}}</p>
+    <br> <br>
+    {% endfor %}
+    <br> <br>
     <a class="btn btn-primary" href="logout">Logout</a>
 </body>
 </html>
