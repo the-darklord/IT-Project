@@ -16,7 +16,14 @@ class Marks(models.Model):
     marks2 = models.IntegerField()
     subject3 = models.CharField(max_length=100)
     marks3 = models.IntegerField()
-    
+
+class Announcements(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    date = models.DateTimeField()
+    class Meta:
+        ordering = ['-date']
+
 class AdminCredentials(models.Model):
     email = models.EmailField()
     password = models.CharField(max_length=100)

@@ -20,12 +20,19 @@
         {{marksform.as_p}}
         <input type="submit" value="Submit">
     </form>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{announcementsform.as_p}}
+        <input type="submit" value="Submit">
+    </form>
     <br> <br> <br> <br>
     <h1> Students </h1>
     {% for s in student %}
     <p>{{s.name}}</p>
+    <br>
     {% endfor %}
     <br> <br> <br> <br>
+    <hr>
     <h1> Marks </h1>
     {% for m in marks %}
     <p>{{m.student.name}}</p>
@@ -35,6 +42,17 @@
     <p>{{m.subject2}} : {{m.marks2}}</p>
     <br>
     <p>{{m.subject3}} : {{m.marks3}}</p>
+    <br> <br>
+    {% endfor %}
+    <br> <br> <br> <br>
+    <hr>
+    <h1> Announcements </h1>
+    {% for a in announcements %}
+    <p>{{a.title}}</p>
+    <br>
+    <p>{{a.description}}</p>
+    <br>
+    <p>{{a.date}}</p>
     <br> <br>
     {% endfor %}
     <br> <br>

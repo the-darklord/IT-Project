@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +8,36 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
-<body>
+<body class="d-flex justify-content-center align-items-baseline vh-100">
     {% csrf_token %}
-    <div>
-        <h1>Welcome, {{ student.name }}</h1> <br>
-        <h1>Email : {{student.email}}</h1> <br>
-        <h1>Phone : {{student.phone}}</h1> <br>
-        <h1>Address : {{student.address}}</h1> <br>
+    <div class="container d-flex flex-column justify-content-center h-100">
+        <div class="position-relative">
+            <a class="btn btn-primary position-absolute end-0 m-2" href="logout">Logout</a>
+        </div>
+        <br>
+        <div class="row mt-5 h-100">
+            <div class="col border border-5">
+                <h1 style="font-size: 25px;">Welcome, <br><strong>{{ student.name }}</strong></h1> <hr><br>
+                <p style="font-size: 25px;" class="mt-5">Email : <br><strong>{{student.email}}</strong></p> <br>
+                <p style="font-size: 25px;" class="mt-5">Phone : <br><strong>{{student.phone}}</strong></p> <br>
+                <p style="font-size: 25px;" class="mt-5">Address : <br><strong>{{student.address}}</strong></p> <br>
+            </div>
+            <div class="col border border-5">
+                <h1 style="font-size: 50px;">Subject Marks</h1><hr>
+                <br>
+                <p style="font-size: 30px;" class="mt-5"><strong>{{marks.subject1}}</strong> : <strong>{{marks.marks1}}</strong></p> <br>
+                <p style="font-size: 30px;" class="mt-5"><strong>{{marks.subject2}}</strong> : <strong>{{marks.marks2}}</strong></p> <br>
+                <p style="font-size: 30px;" class="mt-5"><strong>{{marks.subject3}}</strong> : <strong>{{marks.marks3}}</strong></p> <br>
+            </div>
+            <div class="col border border-5">
+                <h1 style="font-size: 50px;">Announcements</h1><hr>
+                <br>
+                {% for a in announcements %}
+                    <p style="font-size: 30px;" class="mt-5"><strong>{{a.title}}</strong> <br> <strong>{{a.description}}</strong> <br> {{a.date}}</p><br>
+                {% endfor %}
+            </div>
+        </div>
     </div>
     <br> <br>
-    <div>
-        <h2>{{marks.subject1}} : {{marks.marks1}}</h2> <br>
-        <h2>{{marks.subject2}} : {{marks.marks2}}</h2> <br>
-        <h2>{{marks.subject3}} : {{marks.marks3}}</h2> <br>
-    </div>
-    <br> <br>
-    <a class="btn btn-primary" href="logout">Logout</a>
 </body>
 </html>

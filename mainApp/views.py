@@ -1,8 +1,9 @@
+import datetime
 import bcrypt
 
 from django.shortcuts import render,redirect
-from .models import Student,Marks,AdminCredentials,StudentCredentials
-from .forms import StudentForm,MarksForm
+from .models import Student,Marks,AdminCredentials,StudentCredentials,Announcements
+from .forms import StudentForm,MarksForm,AnnouncementsForm
 # Create your views here.
 
 def login(request):
@@ -33,7 +34,8 @@ def studentHome(request):
     if request.session.has_key('studentEmail'):
         student = Student.objects.get(email=request.session['studentEmail'])
         marks = Marks.objects.get(student=student)
-        return render(request, 'mainApp/studentHome.html',{'student':student,'marks':marks})
+        announcements = Announcements.objects.all()
+        return render(request, 'mainApp/studentHome.html',{'student':student,'marks':marks,'announcements':announcements})
     elif request.session.has_key('adminEmail'):
         return redirect('adminHome')
     elif request.method=="POST":
@@ -53,7 +55,8 @@ def studentHome(request):
         request.session.save()
         student = Student.objects.get(email=email)
         marks = Marks.objects.get(student=student)
-        return render(request, 'mainApp/studentHome.html',{'student':student,'marks':marks})
+        announcements = Announcements.objects.all()
+        return render(request, 'mainApp/studentHome.html',{'student':student,'marks':marks,'announcements':announcements})
     else:
         return redirect('studentLogin')
     
@@ -61,13 +64,19 @@ def adminHome(request):
     if request.session.has_key('adminEmail'):
         student = Student.objects.all()
         marks = Marks.objects.all()
+        announcements = Announcements.objects.all()
         form = StudentForm(request.POST)
         if form.is_valid():
             form.save()
         form = MarksForm(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'marksform':MarksForm()})
+        form = AnnouncementsForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.date = datetime.datetime.now()
+            post.save()
+        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'marksform':MarksForm(),'announcementsform':AnnouncementsForm(),'announcements':announcements})
     elif request.session.has_key('studentEmail'):
         return redirect('studentHome')
     elif request.method=="POST":
@@ -77,7 +86,6 @@ def adminHome(request):
             obj = AdminCredentials.objects.get(email=email)
         except AdminCredentials.DoesNotExist:
             return redirect('adminLogin')
-
         salt = obj.salt
         hashedPassword = bcrypt.hashpw(password.encode('utf-8'),salt.encode('utf-8'))
         if hashedPassword.decode('utf-8') != obj.password:
@@ -88,13 +96,19 @@ def adminHome(request):
         request.session.save()
         student = Student.objects.all()
         marks = Marks.objects.all()
+        announcements = Announcements.objects.all()
         form = StudentForm(request.POST)
         if form.is_valid():
             form.save()
         form = MarksForm(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'marksform':MarksForm()})
+        form = AnnouncementsForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.date = datetime.datetime.now()
+            post.save()
+        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'marksform':MarksForm(),'announcementsform':AnnouncementsForm(),'announcements':announcements})
     else:
         return redirect('adminLogin')
     
