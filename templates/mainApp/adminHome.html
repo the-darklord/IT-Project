@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,52 +9,65 @@
     <title>Document</title>
 </head>
 <body>
+    <h1>Student Form</h1>
     <form action="" method="post">
         {% csrf_token %}
         {{studentform.as_p}}
         <input type="submit" value="Submit">
     </form>
     <br> <br> <br> <br>
+    <h1>Marks Form</h1>
     <form action="" method="post">
         {% csrf_token %}
         {{marksform.as_p}}
         <input type="submit" value="Submit">
     </form>
+    <br> <br> <br> <br>
+    <h1>Announcements Form</h1>
     <form action="" method="post">
         {% csrf_token %}
         {{announcementsform.as_p}}
         <input type="submit" value="Submit">
     </form>
     <br> <br> <br> <br>
+    <br> <br> <br> <br>
+    <hr>
     <h1> Students </h1>
-    {% for s in student %}
-    <p>{{s.name}}</p>
-    <br>
-    {% endfor %}
+    <ol>
+        {% for s in student %}
+        <li>
+            <p>{{s.name}}</p>
+            <br>
+        </li>
+        {% endfor %}
+    </ol>
     <br> <br> <br> <br>
     <hr>
     <h1> Marks </h1>
-    {% for m in marks %}
-    <p>{{m.student.name}}</p>
-    <br>
-    <p>{{m.subject1}} : {{m.marks1}}</p>
-    <br>
-    <p>{{m.subject2}} : {{m.marks2}}</p>
-    <br>
-    <p>{{m.subject3}} : {{m.marks3}}</p>
-    <br> <br>
-    {% endfor %}
+    <ol>
+        {% for m in marks %}
+        <li>
+            <p>{{m.student.name}}</p>
+            <p>{{m.subject1}} : {{m.marks1}}</p>
+            <p>{{m.subject2}} : {{m.marks2}}</p>
+            <p>{{m.subject3}} : {{m.marks3}}</p>
+            <br>
+        </li>
+        {% endfor %}
+    </ol>
     <br> <br> <br> <br>
     <hr>
     <h1> Announcements </h1>
-    {% for a in announcements %}
-    <p>{{a.title}}</p>
-    <br>
-    <p>{{a.description}}</p>
-    <br>
-    <p>{{a.date}}</p>
-    <br> <br>
-    {% endfor %}
+    <ol>
+        {% for a in announcements %}
+        <li>
+            <p>{{a.title}}</p>
+            <p>{{a.description}}</p>
+            <p>{{a.date}}</p>
+            <br>
+        </li>
+        {% endfor %}
+    </ol>
     <br> <br>
     <a class="btn btn-primary" href="logout">Logout</a>
 </body>
