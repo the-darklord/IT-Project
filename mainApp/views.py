@@ -33,7 +33,10 @@ def adminLogin(request):
 def studentHome(request):
     if request.session.has_key('studentEmail'):
         student = Student.objects.get(email=request.session['studentEmail'])
-        marks = Marks.objects.get(student=student)
+        try:
+            marks = Marks.objects.get(student=student)
+        except Marks.DoesNotExist:
+            marks = Marks(student=student,subject1='Subject 1',marks1=0,subject2='Subject 2',marks2=0,subject3='Subject 3',marks3=0)
         announcements = Announcements.objects.all()
         return render(request, 'mainApp/studentHome.html',{'student':student,'marks':marks,'announcements':announcements})
     elif request.session.has_key('adminEmail'):
@@ -54,7 +57,10 @@ def studentHome(request):
         request.session.modified = True
         request.session.save()
         student = Student.objects.get(email=email)
-        marks = Marks.objects.get(student=student)
+        try:
+            marks = Marks.objects.get(student=student)
+        except Marks.DoesNotExist:
+            marks = Marks(student=student,subject1='Subject 1',marks1=0,subject2='Subject 2',marks2=0,subject3='Subject 3',marks3=0)
         announcements = Announcements.objects.all()
         return render(request, 'mainApp/studentHome.html',{'student':student,'marks':marks,'announcements':announcements})
     else:
@@ -68,6 +74,12 @@ def adminHome(request):
         form = StudentForm(request.POST)
         if form.is_valid():
             form.save()
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            salt = bcrypt.gensalt()
+            hashedPassword = bcrypt.hashpw(password.encode('utf-8'),salt)
+            obj = StudentCredentials(email=email,password=hashedPassword.decode('utf-8'),salt=salt.decode('utf-8'))
+            obj.save()
         form = MarksForm(request.POST)
         if form.is_valid():
             form.save()
@@ -100,6 +112,12 @@ def adminHome(request):
         form = StudentForm(request.POST)
         if form.is_valid():
             form.save()
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            salt = bcrypt.gensalt()
+            hashedPassword = bcrypt.hashpw(password.encode('utf-8'),salt)
+            obj = StudentCredentials(email=email,password=hashedPassword.decode('utf-8'),salt=salt.decode('utf-8'))
+            obj.save()
         form = MarksForm(request.POST)
         if form.is_valid():
             form.save()

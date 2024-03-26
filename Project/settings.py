@@ -27,8 +27,7 @@ SECRET_KEY = 'django-insecure-@x9$kf)x#fv_8_cj--2gcy5&&8^3@@pgia6c8z0m(4-4v8daje
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['http://*','https://*']
-CORS_ORIGIN_WHITELIST = ['*']
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -114,9 +113,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
