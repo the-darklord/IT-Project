@@ -7,6 +7,8 @@ class Student(models.Model):
     password = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     address = models.TextField()
+    def __str__(self):
+        return f"{self.name}"
         
 class Marks(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
