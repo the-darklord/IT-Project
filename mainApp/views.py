@@ -3,7 +3,7 @@ import bcrypt
 
 from django.shortcuts import render,redirect
 from .models import Student,Marks,AdminCredentials,StudentCredentials,Announcements
-from .forms import StudentForm,MarksForm,AnnouncementsForm
+from .forms import StudentForm,MarksForm,AnnouncementsForm,ChangePasswordForm
 # Create your views here.
 
 def login(request):
@@ -130,6 +130,50 @@ def adminHome(request):
     else:
         return redirect('adminLogin')
     
+def changepassword(request):
+    if request.session.has_key('studentEmail'):
+        student = Student.objects.get(email=request.session['studentEmail'])
+        if request.method=="POST":
+            oldPassword = request.POST['oldPassword']
+            newPassword = request.POST['newPassword']
+            salt = StudentCredentials.objects.get(email=request.session['studentEmail']).salt
+            hashedPassword = bcrypt.hashpw(oldPassword.encode('utf-8'),salt.encode('utf-8'))
+            if hashedPassword.decode('utf-8') == StudentCredentials.objects.get(email=request.session['studentEmail']).password:
+                salt = bcrypt.gensalt()
+                hashedPassword = bcrypt.hashpw(newPassword.encode('utf-8'),salt)
+                obj = StudentCredentials.objects.get(email=request.session['studentEmail'])
+                obj.password = hashedPassword.decode('utf-8')
+                obj.salt = salt.decode('utf-8')
+                obj.save()
+                return redirect('studentHome')
+            else:
+                return render(request, 'mainApp/changepassword.html',{'changepasswordform':ChangePasswordForm(),'message':'Old Password is incorrect'})
+        else:
+            return render(request, 'mainApp/changepassword.html',{'changepasswordform':ChangePasswordForm(),'message':''})
+    elif request.session.has_key('adminEmail'):
+        student = Student.objects.all()
+        marks = Marks.objects.all()
+        announcements = Announcements.objects.all()
+        if request.method=="POST":
+            oldPassword = request.POST['oldPassword']
+            newPassword = request.POST['newPassword']
+            salt = AdminCredentials.objects.get(email=request.session['adminEmail']).salt
+            hashedPassword = bcrypt.hashpw(oldPassword.encode('utf-8'),salt.encode('utf-8'))
+            if hashedPassword.decode('utf-8') == AdminCredentials.objects.get(email=request.session['adminEmail']).password:
+                salt = bcrypt.gensalt()
+                hashedPassword = bcrypt.hashpw(newPassword.encode('utf-8'),salt)
+                obj = AdminCredentials.objects.get(email=request.session['adminEmail'])
+                obj.password = hashedPassword.decode('utf-8')
+                obj.salt = salt.decode('utf-8')
+                obj.save()
+                return redirect('adminHome')
+            else:
+                return render(request, 'mainApp/changepassword.html',{'changepasswordform':ChangePasswordForm(),'message':'Old Password is incorrect'})
+        else:
+            return render(request, 'mainApp/changepassword.html',{'changepasswordform':ChangePasswordForm(),'message':''})
+    else:
+        return redirect
+
 def logout(request):
     if request.session.has_key('studentEmail'):
         del request.session['studentEmail']

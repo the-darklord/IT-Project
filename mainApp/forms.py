@@ -37,3 +37,8 @@ class AnnouncementsForm(forms.ModelForm):
             'title' : forms.TextInput(attrs={'class':'form-control'}),
             'description' : forms.Textarea(attrs={'class':'form-control'}),
         }
+        
+class ChangePasswordForm(forms.Form):
+    oldPassword = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    newPassword = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
+    confirmPassword = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))

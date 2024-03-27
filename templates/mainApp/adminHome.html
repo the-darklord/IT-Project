@@ -20,8 +20,20 @@
             crossorigin="anonymous"
         ></script>
         <title>Document</title>
+        <link rel="icon" href="/static/images/logo.ico" type="image/x-icon" />
     </head>
-    <body class="container-fluid d-flex flex-column">
+    <body class="container d-flex flex-column justify-content-center">
+        <div class="position-relative mt-3 ms-5 mb-5">
+            <a
+                class="btn btn-primary position-absolute end-5 m-2"
+                href="changepassword"
+                >Change Password</a
+            >
+            <a class="btn btn-primary position-absolute end-0 m-2" href="logout"
+                >Logout</a
+            >
+        </div>
+        <div class="m-5"></div>
         <h1>Student Form</h1>
         <form action="" method="post" class="row">
             {% csrf_token %} {{studentform}}
@@ -134,7 +146,8 @@
             {% for a in announcements %}
             <li>
                 <p>{{a.title}}</p>
-                <p>{{a.description}}</p>
+                <span style="white-space: pre">{{a.description}}</span>
+                <br /><br />
                 <p>{{a.date}}</p>
                 <br />
             </li>
@@ -144,6 +157,5 @@
         <br />
         <br />
         <br />
-        <a class="btn btn-primary" href="logout">Logout</a>
     </body>
 </html>
