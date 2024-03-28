@@ -19,10 +19,61 @@
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
             crossorigin="anonymous"
         ></script>
+        <style>
+            .gradient-0 {
+                background: #2c3e50;
+                background: -webkit-linear-gradient(
+                    to right,
+                    rgba(44, 62, 80, 1),
+                    rgba(72, 61, 139, 1),
+                    rgba(102, 51, 153, 1),
+                    rgba(148, 49, 84, 1)
+                );
+                background: linear-gradient(
+                    to right,
+                    rgba(44, 62, 80, 1),
+                    rgba(72, 61, 139, 1),
+                    rgba(102, 51, 153, 1),
+                    rgba(148, 49, 84, 1)
+                );
+            }
+
+            .gradient-1 {
+                background: #6a11cb;
+                background: -webkit-linear-gradient(
+                    to right,
+                    rgba(106, 17, 203, 1),
+                    rgba(37, 117, 252, 1)
+                );
+                background: linear-gradient(
+                    to right,
+                    rgba(106, 17, 203, 1),
+                    rgba(37, 117, 252, 1)
+                );
+            }
+
+            .gradient-2 {
+                background: #6a0dad;
+                background: -webkit-linear-gradient(
+                    to right,
+                    rgba(106, 13, 173, 1),
+                    rgba(255, 0, 255, 1),
+                    rgba(62, 0, 255, 1)
+                );
+                background: linear-gradient(
+                    to right,
+                    rgba(106, 13, 173, 1),
+                    rgba(255, 0, 255, 1),
+                    rgba(62, 0, 255, 1)
+                );
+            }
+        </style>
         <title>Document</title>
         <link rel="icon" href="/static/images/logo.ico" type="image/x-icon" />
     </head>
-    <body class="container d-flex flex-column justify-content-center">
+    <body
+        class="container d-flex flex-column justify-content-center gradient-0"
+    >
         <div class="position-relative mt-3 ms-5 mb-5">
             <a
                 class="btn btn-primary position-absolute end-5 m-2"
@@ -33,9 +84,13 @@
                 >Logout</a
             >
         </div>
-        <div class="m-5"></div>
-        <h1>Student Form</h1>
-        <form action="" method="post" class="row">
+        <div class="m-4"></div>
+        <form
+            action=""
+            method="post"
+            class="row gradient-1 border border-light border-3 m-5 rounded-3"
+        >
+            <h1 class="m-3">Student Form</h1>
             {% csrf_token %} {{studentform}}
             <br />
             <br />
@@ -50,27 +105,22 @@
             <br />
             <br />
             <br />
-            <input class="btn btn-primary" type="submit" value="Submit" />
+            <input
+                class="btn btn-lg btn-success"
+                type="submit"
+                value="Add Student"
+            />
         </form>
         <br />
         <br />
         <br />
         <br />
-        <h1>Marks Form</h1>
-        <form action="" method="post" class="row">
-            {% csrf_token %} {{marksform}}
-            <br />
-            <br />
-            <br />
-            <br />
-            <input class="btn btn-primary" type="submit" value="Submit" />
-        </form>
-        <br />
-        <br />
-        <br />
-        <br />
-        <h1>Announcements Form</h1>
-        <form action="" method="post" class="row">
+        <form
+            action=""
+            method="post"
+            class="row gradient-2 border border-light border-3 m-5 rounded-3"
+        >
+            <h1 class="m-3">Announcements Form</h1>
             {% csrf_token %} {{announcementsform}}
             <br />
             <br />
@@ -85,74 +135,139 @@
             <br />
             <br />
             <br />
-            <input class="btn btn-primary" type="submit" value="Submit" />
+            <input
+                class="btn btn-lg btn-success"
+                type="submit"
+                value="Add Announcement"
+            />
         </form>
-        <hr />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         <br />
         <br />
         <hr />
+        <br />
         <h1>Students</h1>
-        <ol>
-            {% for s in student %}
-            <li>
-                <p>{{s.name}}</p>
-                <br />
-            </li>
-            {% endfor %}
-        </ol>
+        <div class="table-responsive">
+            <table class="table table-bordered border-primary rounded-pill">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email ID</th>
+                        <th>Phone Number</th>
+                        <th>Address</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for s in student %}
+                    <tr>
+                        <td>{{s.name}}</td>
+                        <td>{{s.email}}</td>
+                        <td>{{s.phone}}</td>
+                        <td>{{s.address}}</td>
+                        <td>
+                            <center>
+                                <button class="btn btn-success w-100 h-100">
+                                    Edit
+                                </button>
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                <button class="btn btn-danger w-100 h-100">
+                                    Delete
+                                </button>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <br />
         <br />
         <br />
         <br />
         <hr />
+        <br />
         <h1>Marks</h1>
-        <ol>
-            {% for m in marks %}
-            <li>
-                <p>{{m.student.name}}</p>
-                <p>{{m.subject1}} : {{m.marks1}}</p>
-                <p>{{m.subject2}} : {{m.marks2}}</p>
-                <p>{{m.subject3}} : {{m.marks3}}</p>
-                <br />
-            </li>
-            {% endfor %}
-        </ol>
+        <div class="table-responsive">
+            <table class="table table-bordered border-primary">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Maths</th>
+                        <th>Physics</th>
+                        <th>Chemistry</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for m in marks %}
+                    <tr>
+                        <td>{{m.student.name}}</td>
+                        <td>{{m.marks1}}</td>
+                        <td>{{m.marks2}}</td>
+                        <td>{{m.marks3}}</td>
+                        <td>
+                            <center>
+                                <button class="btn btn-success w-100 h-100">
+                                    Edit
+                                </button>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <br />
         <br />
         <br />
         <br />
         <hr />
+        <br />
         <h1>Announcements</h1>
-        <ol>
-            {% for a in announcements %}
-            <li>
-                <p>{{a.title}}</p>
-                <span style="white-space: pre">{{a.description}}</span>
-                <br /><br />
-                <p>{{a.date}}</p>
-                <br />
-            </li>
-            {% endfor %}
-        </ol>
+        <div class="table-responsive">
+            <table class="table table-bordered border-primary">
+                <thead class="table-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Uploaded On</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for a in announcements %}
+                    <tr>
+                        <td>{{a.title}}</td>
+                        <td>
+                            <span style="white-space: pre"
+                                >{{a.description}}</span
+                            >
+                        </td>
+                        <td>{{a.date}}</td>
+                        <td>
+                            <center>
+                                <button class="btn btn-success w-100 h-100">
+                                    Edit
+                                </button>
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                <button class="btn btn-danger w-100 h-100">
+                                    Delete
+                                </button>
+                            </center>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <br />
         <br />
         <br />

@@ -13,21 +13,7 @@ class StudentForm(forms.ModelForm):
             'phone' : forms.TextInput(attrs={'class':'form-control'}),
             'address' : forms.Textarea(attrs={'class':'form-control'}),
         }
-        
-class MarksForm(forms.ModelForm):
-    class Meta:
-        model = Marks
-        fields = '__all__'
-        widgets = {
-            'student' : forms.Select(attrs={'class':'form-control'}),
-            'subject1' : forms.TextInput(attrs={'class':'form-control'}),
-            'marks1' : forms.NumberInput(attrs={'class':'form-control'}),
-            'subject2' : forms.TextInput(attrs={'class':'form-control'}),
-            'marks2' : forms.NumberInput(attrs={'class':'form-control'}),
-            'subject3' : forms.TextInput(attrs={'class':'form-control'}),
-            'marks3' : forms.NumberInput(attrs={'class':'form-control'}),
-        }
-        
+                
 class AnnouncementsForm(forms.ModelForm):
     class Meta:
         model = Announcements

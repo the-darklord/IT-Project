@@ -19,12 +19,31 @@
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
             crossorigin="anonymous"
         ></script>
+        <style>
+            .gradient-0 {
+                background: #0d0d0d;
+                background: -webkit-linear-gradient(
+                    to right,
+                    rgba(13, 13, 13, 1),
+                    rgba(17, 17, 17, 1)
+                );
+                background: linear-gradient(
+                    to right,
+                    rgba(13, 13, 13, 1),
+                    rgba(17, 17, 17, 1)
+                );
+            }
+        </style>
         <title>Document</title>
         <link rel="icon" href="/static/images/logo.ico" type="image/x-icon" />
     </head>
-    <body class="d-flex justify-content-center align-items-baseline vh-100">
+    <body
+        class="container-fluid d-flex justify-content-center align-items-baseline vh-100 gradient-0"
+    >
         {% csrf_token %}
-        <div class="container d-flex flex-column justify-content-center h-100">
+        <div
+            class="container-fluid d-flex flex-column justify-content-center h-100"
+        >
             <div class="position-relative">
                 <a
                     class="btn btn-primary position-absolute end-5 m-2"
@@ -63,17 +82,17 @@
                     <hr />
                     <br />
                     <p style="font-size: 30px" class="mt-5">
-                        <strong>{{marks.subject1}}</strong> :
+                        <strong>Maths </strong> :
                         <strong>{{marks.marks1}}</strong>
                     </p>
                     <br />
                     <p style="font-size: 30px" class="mt-5">
-                        <strong>{{marks.subject2}}</strong> :
+                        <strong>Physics </strong> :
                         <strong>{{marks.marks2}}</strong>
                     </p>
                     <br />
                     <p style="font-size: 30px" class="mt-5">
-                        <strong>{{marks.subject3}}</strong> :
+                        <strong>Chemistry </strong> :
                         <strong>{{marks.marks3}}</strong>
                     </p>
                     <br />

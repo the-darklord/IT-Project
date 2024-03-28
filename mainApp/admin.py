@@ -6,7 +6,7 @@ class StudentAdmin(admin.ModelAdmin):
     list_display = ['name','email','password','phone','address']
 
 class MarksAdmin(admin.ModelAdmin):
-    list_display = ['student','subject1','marks1','subject2','marks2','subject3','marks3']
+    list_display = ['student','marks1','marks2','marks3']
 
 class AnnouncementsAdmin(admin.ModelAdmin):
     list_display = ['title','description','date']

@@ -12,11 +12,8 @@ class Student(models.Model):
         
 class Marks(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    subject1 = models.CharField(max_length=100)
     marks1 = models.IntegerField()
-    subject2 = models.CharField(max_length=100)
     marks2 = models.IntegerField()
-    subject3 = models.CharField(max_length=100)
     marks3 = models.IntegerField()
 
 class Announcements(models.Model):

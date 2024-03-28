@@ -3,7 +3,7 @@ import bcrypt
 
 from django.shortcuts import render,redirect
 from .models import Student,Marks,AdminCredentials,StudentCredentials,Announcements
-from .forms import StudentForm,MarksForm,AnnouncementsForm,ChangePasswordForm
+from .forms import StudentForm,AnnouncementsForm,ChangePasswordForm
 # Create your views here.
 
 def login(request):
@@ -36,7 +36,7 @@ def studentHome(request):
         try:
             marks = Marks.objects.get(student=student)
         except Marks.DoesNotExist:
-            marks = Marks(student=student,subject1='Subject 1',marks1=0,subject2='Subject 2',marks2=0,subject3='Subject 3',marks3=0)
+            marks = Marks(student=student,marks1=0,marks2=0,marks3=0)
         announcements = Announcements.objects.all()
         return render(request, 'mainApp/studentHome.html',{'student':student,'marks':marks,'announcements':announcements})
     elif request.session.has_key('adminEmail'):
@@ -60,7 +60,7 @@ def studentHome(request):
         try:
             marks = Marks.objects.get(student=student)
         except Marks.DoesNotExist:
-            marks = Marks(student=student,subject1='Subject 1',marks1=0,subject2='Subject 2',marks2=0,subject3='Subject 3',marks3=0)
+            marks = Marks(student=student,marks1=0,marks2=0,marks3=0)
         announcements = Announcements.objects.all()
         return render(request, 'mainApp/studentHome.html',{'student':student,'marks':marks,'announcements':announcements})
     else:
@@ -80,15 +80,14 @@ def adminHome(request):
             hashedPassword = bcrypt.hashpw(password.encode('utf-8'),salt)
             obj = StudentCredentials(email=email,password=hashedPassword.decode('utf-8'),salt=salt.decode('utf-8'))
             obj.save()
-        form = MarksForm(request.POST)
-        if form.is_valid():
-            form.save()
+            obj = Marks(student=Student.objects.get(email=email),marks1=0,marks2=0,marks3=0)
+            obj.save()
         form = AnnouncementsForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.date = datetime.datetime.now()
             post.save()
-        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'marksform':MarksForm(),'announcementsform':AnnouncementsForm(),'announcements':announcements})
+        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'announcementsform':AnnouncementsForm(),'announcements':announcements})
     elif request.session.has_key('studentEmail'):
         return redirect('studentHome')
     elif request.method=="POST":
@@ -118,21 +117,19 @@ def adminHome(request):
             hashedPassword = bcrypt.hashpw(password.encode('utf-8'),salt)
             obj = StudentCredentials(email=email,password=hashedPassword.decode('utf-8'),salt=salt.decode('utf-8'))
             obj.save()
-        form = MarksForm(request.POST)
-        if form.is_valid():
-            form.save()
+            obj = Marks(student=Student.objects.get(email=email),marks1=0,marks2=0,marks3=0)
+            obj.save()
         form = AnnouncementsForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.date = datetime.datetime.now()
             post.save()
-        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'marksform':MarksForm(),'announcementsform':AnnouncementsForm(),'announcements':announcements})
+        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'announcementsform':AnnouncementsForm(),'announcements':announcements})
     else:
         return redirect('adminLogin')
     
 def changepassword(request):
     if request.session.has_key('studentEmail'):
-        student = Student.objects.get(email=request.session['studentEmail'])
         if request.method=="POST":
             oldPassword = request.POST['oldPassword']
             newPassword = request.POST['newPassword']
@@ -151,9 +148,6 @@ def changepassword(request):
         else:
             return render(request, 'mainApp/changepassword.html',{'changepasswordform':ChangePasswordForm(),'message':''})
     elif request.session.has_key('adminEmail'):
-        student = Student.objects.all()
-        marks = Marks.objects.all()
-        announcements = Announcements.objects.all()
         if request.method=="POST":
             oldPassword = request.POST['oldPassword']
             newPassword = request.POST['newPassword']
@@ -172,7 +166,7 @@ def changepassword(request):
         else:
             return render(request, 'mainApp/changepassword.html',{'changepasswordform':ChangePasswordForm(),'message':''})
     else:
-        return redirect
+        return redirect('login')
 
 def logout(request):
     if request.session.has_key('studentEmail'):
