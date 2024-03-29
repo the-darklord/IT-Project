@@ -1,0 +1,33 @@
+{% extends "mainApp/base.html" %} {% block content %}
+<h1>Marks</h1>
+<div class="table-responsive">
+    <table class="table table-bordered border-primary">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Maths</th>
+                <th>Physics</th>
+                <th>Chemistry</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for m in marks %}
+            <tr>
+                <td>{{m.student.name}}</td>
+                <td>{{m.marks1}}</td>
+                <td>{{m.marks2}}</td>
+                <td>{{m.marks3}}</td>
+                <td>
+                    <center>
+                        <button class="btn btn-success w-100 h-100">
+                            Edit
+                        </button>
+                    </center>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

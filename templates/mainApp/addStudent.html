@@ -1,0 +1,24 @@
+{% extends "mainApp/base.html" %} {% block content %}
+<form
+    action=""
+    method="post"
+    class="row gradient-1 border border-light border-3 m-5 rounded-3"
+>
+    <h1 class="m-3">Student Form</h1>
+    {% csrf_token %} {{studentform}}
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <input class="btn btn-lg btn-success" type="submit" value="Add Student" />
+</form>
+{% endblock %}

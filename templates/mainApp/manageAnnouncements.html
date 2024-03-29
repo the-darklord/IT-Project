@@ -1,0 +1,41 @@
+{% extends "mainApp/base.html" %} {% block content %}
+<h1>Announcements</h1>
+<div class="table-responsive">
+    <table class="table table-bordered border-primary">
+        <thead class="table-light">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Uploaded On</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for a in announcements %}
+            <tr>
+                <td>{{a.title}}</td>
+                <td>
+                    <span style="white-space: pre">{{a.description}}</span>
+                </td>
+                <td>{{a.date}}</td>
+                <td>
+                    <center>
+                        <button class="btn btn-success w-100 h-100">
+                            Edit
+                        </button>
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        <button class="btn btn-danger w-100 h-100">
+                            Delete
+                        </button>
+                    </center>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

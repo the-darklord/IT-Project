@@ -39,20 +39,6 @@
             }
 
             .gradient-1 {
-                background: #6a11cb;
-                background: -webkit-linear-gradient(
-                    to right,
-                    rgba(106, 17, 203, 1),
-                    rgba(37, 117, 252, 1)
-                );
-                background: linear-gradient(
-                    to right,
-                    rgba(106, 17, 203, 1),
-                    rgba(37, 117, 252, 1)
-                );
-            }
-
-            .gradient-2 {
                 background: #6a0dad;
                 background: -webkit-linear-gradient(
                     to right,
@@ -82,45 +68,43 @@
                         <a
                             class="btn btn-primary nav-link"
                             aria-current="page"
-                            href="adminHome"
+                            href="../adminHome"
                             >Home</a
                         >
-                        <a
-                            class="btn btn-primary nav-link"
-                            href="adminHome/addStudent"
+                        <a class="btn btn-primary nav-link" href="addStudent"
                             >Add Student</a
                         >
                         <a
                             class="btn btn-primary nav-link"
-                            href="adminHome/manageStudents"
+                            href="manageStudents"
                             >Manage Students</a
                         >
-                        <a
-                            class="btn btn-primary nav-link"
-                            href="adminHome/manageMarks"
+                        <a class="btn btn-primary nav-link" href="manageMarks"
                             >Manage Marks</a
                         >
                         <a
                             class="btn btn-primary nav-link"
-                            href="adminHome/addAnnouncement"
+                            href="addAnnouncement"
                             >Add Announcement</a
                         >
                         <a
                             class="btn btn-primary nav-link"
-                            href="adminHome/manageAnnouncements"
+                            href="manageAnnouncements"
                             >Manage Announcements</a
                         >
                         <a
                             class="btn btn-primary nav-link"
-                            href="changepassword"
+                            href="../changepassword"
                             >Change Password</a
                         >
-                        <a class="btn btn-primary nav-link" href="logout"
+                        <a class="btn btn-primary nav-link" href="../logout"
                             >Logout</a
                         >
                     </div>
                 </div>
             </div>
         </nav>
+        <div class="m-5"></div>
+        {% block content %}{% endblock %}
     </body>
 </html>

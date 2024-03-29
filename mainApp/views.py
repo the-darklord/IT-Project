@@ -68,26 +68,7 @@ def studentHome(request):
     
 def adminHome(request):
     if request.session.has_key('adminEmail'):
-        student = Student.objects.all()
-        marks = Marks.objects.all()
-        announcements = Announcements.objects.all()
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            salt = bcrypt.gensalt()
-            hashedPassword = bcrypt.hashpw(password.encode('utf-8'),salt)
-            obj = StudentCredentials(email=email,password=hashedPassword.decode('utf-8'),salt=salt.decode('utf-8'))
-            obj.save()
-            obj = Marks(student=Student.objects.get(email=email),marks1=0,marks2=0,marks3=0)
-            obj.save()
-        form = AnnouncementsForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.date = datetime.datetime.now()
-            post.save()
-        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'announcementsform':AnnouncementsForm(),'announcements':announcements})
+        return render(request, 'mainApp/adminHome.html')
     elif request.session.has_key('studentEmail'):
         return redirect('studentHome')
     elif request.method=="POST":
@@ -105,26 +86,7 @@ def adminHome(request):
         request.session['adminPassword'] = hashedPassword.decode('utf-8')
         request.session.modified = True
         request.session.save()
-        student = Student.objects.all()
-        marks = Marks.objects.all()
-        announcements = Announcements.objects.all()
-        form = StudentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            salt = bcrypt.gensalt()
-            hashedPassword = bcrypt.hashpw(password.encode('utf-8'),salt)
-            obj = StudentCredentials(email=email,password=hashedPassword.decode('utf-8'),salt=salt.decode('utf-8'))
-            obj.save()
-            obj = Marks(student=Student.objects.get(email=email),marks1=0,marks2=0,marks3=0)
-            obj.save()
-        form = AnnouncementsForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.date = datetime.datetime.now()
-            post.save()
-        return render(request, 'mainApp/adminHome.html',{'student':student,'marks':marks,'studentform':StudentForm(),'announcementsform':AnnouncementsForm(),'announcements':announcements})
+        return render(request, 'mainApp/adminHome.html')
     else:
         return redirect('adminLogin')
     
@@ -168,6 +130,60 @@ def changepassword(request):
     else:
         return redirect('login')
 
+def addStudent(request):
+    if request.session.has_key('adminEmail'):
+        if request.method=="POST":
+            form = StudentForm(request.POST)
+            if form.is_valid():
+                form.save()
+                email = form.cleaned_data['email']
+                password = form.cleaned_data['password']
+                salt = bcrypt.gensalt()
+                hashedPassword = bcrypt.hashpw(password.encode('utf-8'),salt)
+                obj = StudentCredentials(email=email,password=hashedPassword.decode('utf-8'),salt=salt.decode('utf-8'))
+                obj.save()
+                obj = Marks(student=Student.objects.get(email=email),marks1=0,marks2=0,marks3=0)
+                obj.save()
+            return render(request, 'mainApp/addStudent.html',{'studentform':StudentForm()})
+        else:
+            return render(request, 'mainApp/addStudent.html',{'studentform':StudentForm()})
+    else:
+        return redirect('login')
+
+def manageStudents(request):
+    if request.session.has_key('adminEmail'):
+        students = Student.objects.all()
+        return render(request, 'mainApp/manageStudents.html',{'student':students})
+    else:
+        return redirect('login')
+    
+def manageMarks(request):
+    if request.session.has_key('adminEmail'):
+        marks = Marks.objects.all()
+        return render(request, 'mainApp/manageMarks.html',{'marks':marks})
+    else:
+        return redirect('login')
+
+def addAnnouncement(request):
+    if request.session.has_key('adminEmail'):
+        if request.method=="POST":
+            form = AnnouncementsForm(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.date = datetime.datetime.now()
+                post.save()
+            return render(request, 'mainApp/addAnnouncement.html',{'announcementsform':AnnouncementsForm()})
+        else:
+            return render(request, 'mainApp/addAnnouncement.html',{'announcementsform':AnnouncementsForm()})
+    else:
+        return redirect('login')
+
+def manageAnnouncements(request):
+    if request.session.has_key('adminEmail'):
+        announcements = Announcements.objects.all()
+        return render(request, 'mainApp/manageAnnouncements.html',{'announcements':announcements})
+    else:
+        return redirect('login')
 def logout(request):
     if request.session.has_key('studentEmail'):
         del request.session['studentEmail']
