@@ -95,6 +95,9 @@ def changepassword(request):
         if request.method=="POST":
             oldPassword = request.POST['oldPassword']
             newPassword = request.POST['newPassword']
+            confirmPassword = request.POST['confirmPassword']
+            if newPassword != confirmPassword:
+                return render(request, 'mainApp/changepassword.html',{'changepasswordform':ChangePasswordForm(),'message':'Passwords do not match'})
             salt = StudentCredentials.objects.get(email=request.session['studentEmail']).salt
             hashedPassword = bcrypt.hashpw(oldPassword.encode('utf-8'),salt.encode('utf-8'))
             if hashedPassword.decode('utf-8') == StudentCredentials.objects.get(email=request.session['studentEmail']).password:
@@ -103,6 +106,9 @@ def changepassword(request):
                 obj = StudentCredentials.objects.get(email=request.session['studentEmail'])
                 obj.password = hashedPassword.decode('utf-8')
                 obj.salt = salt.decode('utf-8')
+                obj.save()
+                obj = Student.objects.get(email=request.session['studentEmail'])
+                obj.password = newPassword
                 obj.save()
                 return redirect('studentHome')
             else:
@@ -113,6 +119,9 @@ def changepassword(request):
         if request.method=="POST":
             oldPassword = request.POST['oldPassword']
             newPassword = request.POST['newPassword']
+            confirmPassword = request.POST['confirmPassword']
+            if newPassword != confirmPassword:
+                return render(request, 'mainApp/changepassword.html',{'changepasswordform':ChangePasswordForm(),'message':'Passwords do not match'})
             salt = AdminCredentials.objects.get(email=request.session['adminEmail']).salt
             hashedPassword = bcrypt.hashpw(oldPassword.encode('utf-8'),salt.encode('utf-8'))
             if hashedPassword.decode('utf-8') == AdminCredentials.objects.get(email=request.session['adminEmail']).password:
@@ -156,11 +165,58 @@ def manageStudents(request):
         return render(request, 'mainApp/manageStudents.html',{'student':students})
     else:
         return redirect('login')
+
+def updateStudent(request,id):
+    if request.session.has_key('adminEmail'):
+        if request.method=="POST":
+            student = Student.objects.get(id=id)
+            student.name = request.POST['name']
+            student.email = request.POST['email']
+            student.password = request.POST['password']
+            salt = StudentCredentials.objects.get(email=student.email).salt
+            hashedPassword = bcrypt.hashpw(student.password.encode('utf-8'),salt.encode('utf-8'))
+            obj = StudentCredentials.objects.get(email=student.email)
+            obj.password = hashedPassword.decode('utf-8')
+            obj.save()            
+            student.phone = request.POST['phone']
+            student.address = request.POST['address']
+            student.save()
+            return redirect('manageStudents')
+        else:
+            student = Student.objects.get(id=id)
+            return render(request, 'mainApp/updateStudent.html',{'student':student})
+    else:
+        return redirect('login')
+
+def deleteStudent(request,id):
+    if request.session.has_key('adminEmail'):
+        student = Student.objects.get(id=id)
+        StudentCredentials.objects.get(email=student.email).delete()
+        Marks.objects.get(student=student).delete()
+        Student.objects.get(id=id).delete()
+        return redirect('manageStudents')
+    else:
+        return redirect('login')
     
 def manageMarks(request):
     if request.session.has_key('adminEmail'):
         marks = Marks.objects.all()
         return render(request, 'mainApp/manageMarks.html',{'marks':marks})
+    else:
+        return redirect('login')
+
+def updateMarks(request,id):
+    if request.session.has_key('adminEmail'):
+        if request.method=="POST":
+            marks = Marks.objects.get(id=id)
+            marks.marks1 = request.POST['marks1']
+            marks.marks2 = request.POST['marks2']
+            marks.marks3 = request.POST['marks3']
+            marks.save()
+            return redirect('manageMarks')
+        else:
+            marks = Marks.objects.get(id=id)
+            return render(request, 'mainApp/updateMarks.html',{'marks':marks})
     else:
         return redirect('login')
 
@@ -184,6 +240,28 @@ def manageAnnouncements(request):
         return render(request, 'mainApp/manageAnnouncements.html',{'announcements':announcements})
     else:
         return redirect('login')
+    
+def updateAnnouncement(request,id):
+    if request.session.has_key('adminEmail'):
+        if request.method=="POST":
+            announcement = Announcements.objects.get(id=id)
+            announcement.title = request.POST['title']
+            announcement.description = request.POST['description']
+            announcement.save()
+            return redirect('manageAnnouncements')
+        else:
+            announcement = Announcements.objects.get(id=id)
+            return render(request, 'mainApp/updateAnnouncement.html',{'announcement':announcement})
+    else:
+        return redirect('login')
+    
+def deleteAnnouncement(request,id):
+    if request.session.has_key('adminEmail'):
+        Announcements.objects.get(id=id).delete()
+        return redirect('manageAnnouncements')
+    else:
+        return redirect('login')
+    
 def logout(request):
     if request.session.has_key('studentEmail'):
         del request.session['studentEmail']

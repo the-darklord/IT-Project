@@ -6,6 +6,7 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
+        exclude = ('id',)
         widgets = {
             'name' : forms.TextInput(attrs={'class':'form-control'}),
             'email' : forms.EmailInput(attrs={'class':'form-control'}),
@@ -18,7 +19,7 @@ class AnnouncementsForm(forms.ModelForm):
     class Meta:
         model = Announcements
         fields = '__all__'
-        exclude = ('date',)
+        exclude = ('date','id')
         widgets = {
             'title' : forms.TextInput(attrs={'class':'form-control'}),
             'description' : forms.Textarea(attrs={'class':'form-control'}),

@@ -21,16 +21,22 @@
                 <td>{{s.address}}</td>
                 <td>
                     <center>
-                        <button class="btn btn-success w-100 h-100">
+                        <a
+                            class="btn btn-success w-100 h-100"
+                            href="manageStudents/update/{{s.id}}"
+                        >
                             Edit
-                        </button>
+                        </a>
                     </center>
                 </td>
                 <td>
                     <center>
-                        <button class="btn btn-danger w-100 h-100">
+                        <a
+                            class="btn btn-danger w-100 h-100"
+                            href="manageStudents/delete/{{s.id}}"
+                        >
                             Delete
-                        </button>
+                        </a>
                     </center>
                 </td>
             </tr>

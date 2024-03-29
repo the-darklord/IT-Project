@@ -3,19 +3,19 @@ from .models import Student,Marks,AdminCredentials,StudentCredentials,Announceme
 # Register your models here.
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ['name','email','password','phone','address']
+    list_display = ['id','name','email','password','phone','address']
 
 class MarksAdmin(admin.ModelAdmin):
-    list_display = ['student','marks1','marks2','marks3']
+    list_display = ['id','student','marks1','marks2','marks3']
 
 class AnnouncementsAdmin(admin.ModelAdmin):
-    list_display = ['title','description','date']
+    list_display = ['id','title','description','date']
 
 class AdminCredentialsAdmin(admin.ModelAdmin):
-    list_display = ['email','password','salt']
+    list_display = ['id','email','password','salt']
     
 class StudentCredentialsAdmin(admin.ModelAdmin):
-    list_display = ['email','password','salt']
+    list_display = ['id','email','password','salt']
 
 admin.site.register(Student,StudentAdmin)
 admin.site.register(Marks,MarksAdmin)
