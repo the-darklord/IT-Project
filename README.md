@@ -1,35 +1,24 @@
-<h1>
-  IT Project Instructions
-</h1>
 
-<h2>
-  Prerequisuites : 
-</h2>
-<br>
-<h4> Install Latest Git </h4>
-
-```bash
-https://git-scm.com/download
 ```
+# IT Project Instructions
 
-<h4> Install Latest Python </h4>
+## Prerequisites
 
-```bash
-https://www.python.org/downloads/
-```
+### Install Latest Git
+Download and install Git from: https://git-scm.com/download
 
-<br> <br>
-<hr>
-<h1>
-  Steps to Follow : 
-</h1>
-<br>
-<h4> Open a Terminal </h4>
-cmd in Windows
+### Install Latest Python
+Download and install Python from: https://www.python.org/downloads/
 
-shell in Linux/MacOS
-<h4> Enter the Following </h4>
+---
 
+# Steps to Follow
+
+## Open a Terminal
+- **Windows:** Use `cmd`
+- **Linux/MacOS:** Use `shell`
+
+## Enter the Following Commands
 ```bash
 mkdir itproject
 cd itproject
@@ -39,21 +28,21 @@ pip install virtualenv
 virtualenv django-env
 ```
 
-For Windows :
+### For Windows:
 ```bash
 cd django-env/Scripts
 activate
 cd ../..
 ```
 
-For Linux/MacOS
+### For Linux/MacOS:
 ```bash
 cd django-env/bin
 source activate
 cd ../..
 ```
 
-For All
+### For All:
 ```bash
 pip install -r requirements.txt
 python manage.py makemigrations
@@ -61,7 +50,9 @@ python manage.py migrate
 python manage.py clearsessions
 python manage.py runserver
 ```
-Open a Web Browser and Enter the following :
-```bash
+
+## Open a Web Browser and Enter:
+```
 http://localhost:8000
+```
 ```
